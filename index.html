@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="sv" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aktivitetskoll</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Laddas här (inte defer) så att valt tema sätts innan sidan målas -->
+    <script src="app.js"></script>
+</head>
+<body>
+    <div class="page">
+
+        <header class="top">
+            <h1 class="brand">
+                <svg class="brand-mark" viewBox="0 0 32 14" width="32" height="14" aria-hidden="true">
+                    <rect x="0" y="2" width="11" height="10" rx="2" fill="var(--part-0)"/>
+                    <rect x="13" y="2" width="8" height="10" rx="2" fill="var(--part-2)"/>
+                    <rect x="23" y="2" width="9" height="10" rx="2" fill="none" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="2 2"/>
+                </svg>
+                Aktivitetskoll
+            </h1>
+            <div class="top-actions">
+                <button type="button" class="btn btn-quiet" data-action="export">Exportera</button>
+                <button type="button" class="btn btn-quiet" data-action="import">Importera</button>
+                <button type="button" class="icon-btn" id="themeToggle" data-action="toggle-theme"
+                        aria-pressed="false" aria-label="Mörkt tema" title="Mörkt tema">
+                    <svg class="icon-moon" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+                        <path d="M16.5 11.8A7 7 0 0 1 8.2 3.5a7 7 0 1 0 8.3 8.3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                    </svg>
+                    <svg class="icon-sun" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+                        <circle cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                        <path d="M10 2.2v2M10 15.8v2M2.2 10h2M15.8 10h2M4.5 4.5l1.4 1.4M14.1 14.1l1.4 1.4M4.5 15.5l1.4-1.4M14.1 5.9l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <input type="file" id="importFile" accept="application/json,.json" hidden>
+            </div>
+        </header>
+
+        <p class="lead" id="lead" aria-live="polite"></p>
+
+        <div class="controls">
+            <div class="search">
+                <label class="sr-only" for="searchInput">Sök deltagare eller aktivitet</label>
+                <input type="search" id="searchInput" placeholder="Sök namn eller aktivitet" autocomplete="off">
+            </div>
+
+            <div class="filter" role="group" aria-label="Visa deltagare">
+                <button type="button" data-filter="all" aria-pressed="true">Alla <span class="count" id="countAll">0</span></button>
+                <button type="button" data-filter="below" aria-pressed="false">Under mål <span class="count" id="countBelow">0</span></button>
+                <button type="button" data-filter="met" aria-pressed="false">Godkända <span class="count" id="countMet">0</span></button>
+            </div>
+
+            <label class="sr-only" for="sortSelect">Sortera</label>
+            <select id="sortSelect">
+                <option value="name">Namn A–Ö</option>
+                <option value="remaining">Mest kvar</option>
+            </select>
+
+            <button type="button" class="btn btn-primary" data-action="new">Ny deltagare</button>
+        </div>
+
+        <main>
+            <ul class="sheet" id="participantList"></ul>
+        </main>
+    </div>
+
+    <!-- Lägg till / ändra deltagare -->
+    <dialog id="participantDialog" aria-labelledby="dialogTitle">
+        <form id="participantForm">
+            <div class="dlg-head">
+                <h2 id="dialogTitle">Ny deltagare</h2>
+            </div>
+
+            <div class="dlg-body">
+                <div class="field">
+                    <label for="nameInput">Namn</label>
+                    <input type="text" id="nameInput" required autocomplete="off" placeholder="Förnamn Efternamn">
+                </div>
+
+                <div class="field field-narrow">
+                    <label for="targetInput">Krävt timantal (mål)</label>
+                    <input type="number" id="targetInput" required min="0" step="any" inputmode="decimal" value="40">
+                </div>
+
+                <fieldset class="activities">
+                    <legend>Aktiviteter</legend>
+                    <p class="hint">Timmarna för alla aktiviteter räknas ihop mot målet.</p>
+                    <div class="act-head" aria-hidden="true">
+                        <span>Aktivitet / insats</span>
+                        <span>Timmar</span>
+                        <span></span>
+                    </div>
+                    <div id="activityRows"></div>
+                    <button type="button" class="btn btn-quiet btn-sm" data-action="add-activity">+ Lägg till aktivitet</button>
+                </fieldset>
+
+                <p class="sum" id="dialogSum" aria-live="polite"></p>
+            </div>
+
+            <div class="dlg-foot">
+                <button type="button" class="btn btn-danger-quiet" id="deleteBtn" data-action="delete" hidden>Ta bort deltagare</button>
+                <span class="spacer"></span>
+                <button type="button" class="btn" data-action="cancel">Avbryt</button>
+                <button type="submit" class="btn btn-primary">Spara</button>
+            </div>
+        </form>
+    </dialog>
+
+    <datalist id="activityNames"></datalist>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

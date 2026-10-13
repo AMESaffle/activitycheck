@@ -1,0 +1,699 @@
+/* ==========================================================
+   Aktivitetskoll – formgivning
+   Ljust tema som standard, mörkt tema via [data-theme="dark"]
+   ========================================================== */
+
+:root {
+    color-scheme: light;
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+    --bg: #eef2f1;
+    --surface: #ffffff;
+    --surface-2: #f3f6f5;
+    --ink: #14232b;
+    --ink-soft: #52656e;
+    --line: #d5dedc;
+    --line-strong: #7f949b;
+
+    --accent: #1f5f7a;
+    --accent-hover: #184c63;
+    --accent-ink: #ffffff;
+
+    --ok: #17724a;
+    --ok-soft: #dbf0e4;
+    --warn: #b3261e;
+    --warn-soft: #fbe4e1;
+    --hatch: rgba(179, 38, 30, 0.55);
+
+    /* Färger för aktiviteterna i stapeln */
+    --part-0: #2b6c8f;
+    --part-1: #6b5bb5;
+    --part-2: #c27b1a;
+    --part-3: #b8457a;
+    --part-4: #2f8f8a;
+    --part-5: #6b7c85;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #0e181d;
+    --surface: #15232a;
+    --surface-2: #1b2c34;
+    --ink: #e5eef1;
+    --ink-soft: #9fb3bb;
+    --line: #27393f;
+    --line-strong: #5d767f;
+
+    --accent: #6cc0de;
+    --accent-hover: #8dd0e8;
+    --accent-ink: #0b1a20;
+
+    --ok: #5fd39b;
+    --ok-soft: #14352a;
+    --warn: #ff9a90;
+    --warn-soft: #3d1c1b;
+    --hatch: rgba(255, 154, 144, 0.6);
+
+    --part-0: #5ba8cc;
+    --part-1: #9e8fe0;
+    --part-2: #e0a04a;
+    --part-3: #e07aa6;
+    --part-4: #5cc4c0;
+    --part-5: #9aaab3;
+}
+
+/* ---------- Grund ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 1rem/1.5 var(--font);
+}
+
+h1, h2, h3, p, ul {
+    margin: 0;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.num {
+    font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 20px 72px;
+}
+
+/* ---------- Sidhuvud ---------- */
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-bottom: 36px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.125rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.lead {
+    max-width: 36em;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+    line-height: 1.3;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Knappar och fält ---------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 16px;
+    font: 600 0.9375rem/1 var(--font);
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--surface-2);
+}
+
+.btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-quiet {
+    background: transparent;
+    border-color: transparent;
+    color: var(--accent);
+}
+
+.btn-quiet:hover {
+    background: var(--surface-2);
+}
+
+.btn-danger-quiet {
+    background: transparent;
+    border-color: transparent;
+    color: var(--warn);
+}
+
+.btn-danger-quiet:hover {
+    background: var(--warn-soft);
+}
+
+.btn-sm {
+    min-height: 32px;
+    padding: 4px 10px;
+    font-size: 0.875rem;
+}
+
+.icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.icon-btn:hover {
+    background: var(--surface-2);
+}
+
+.icon-btn-quiet {
+    border-color: transparent;
+    color: var(--ink-soft);
+}
+
+.icon-btn .icon-sun {
+    display: none;
+}
+
+:root[data-theme="dark"] .icon-btn .icon-sun {
+    display: block;
+}
+
+:root[data-theme="dark"] .icon-btn .icon-moon {
+    display: none;
+}
+
+input,
+select {
+    font: inherit;
+    color: var(--ink);
+    background: var(--surface);
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+}
+
+input::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.8;
+}
+
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+    border-color: var(--accent);
+}
+
+/* ---------- Sök, filter, sortering ---------- */
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 16px;
+}
+
+.search {
+    flex: 1 1 200px;
+}
+
+.search input {
+    width: 100%;
+}
+
+.filter {
+    display: inline-flex;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.filter button {
+    min-height: 38px;
+    padding: 6px 14px;
+    font: 600 0.875rem/1 var(--font);
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-right: 1px solid var(--line);
+    cursor: pointer;
+}
+
+.filter button:last-child {
+    border-right: 0;
+}
+
+.filter button:hover {
+    background: var(--surface-2);
+}
+
+.filter button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+.filter .count {
+    margin-left: 4px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.85;
+}
+
+.filter button:focus-visible {
+    outline-offset: -3px;
+}
+
+/* ---------- Deltagarlistan ---------- */
+
+.sheet {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.p {
+    display: grid;
+    gap: 10px;
+    padding: 16px 20px;
+}
+
+.p + .p {
+    border-top: 1px solid var(--line);
+}
+
+.p-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+}
+
+.p-name {
+    margin-right: auto;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.p-hours {
+    font-weight: 600;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.status.ok {
+    color: var(--ok);
+    background: var(--ok-soft);
+}
+
+.status.warn {
+    color: var(--warn);
+    background: var(--warn-soft);
+}
+
+/* Stapeln: varje aktivitet är en del, det som saknas är streckat */
+
+.meter {
+    display: flex;
+    gap: 2px;
+    height: 14px;
+    background: var(--surface-2);
+    border-radius: 4px;
+}
+
+.part {
+    flex-basis: 0;
+    min-width: 4px;
+    border-radius: 3px;
+}
+
+.gap {
+    flex-basis: 0;
+    min-width: 4px;
+    border-radius: 3px;
+    background: repeating-linear-gradient(135deg, var(--hatch) 0 2px, transparent 2px 7px);
+    box-shadow: inset 0 0 0 1px var(--hatch);
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+}
+
+.legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend .num {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.legend .muted {
+    font-style: normal;
+}
+
+.swatch {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.empty {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    padding: 40px 24px;
+}
+
+.empty p:first-child {
+    font-size: 1.0625rem;
+    font-weight: 600;
+}
+
+.empty .btn {
+    margin-top: 8px;
+}
+
+.hint {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+}
+
+/* ---------- Dialog ---------- */
+
+dialog {
+    width: min(560px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 0;
+    overflow: auto;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 28px 70px -24px rgba(0, 0, 0, 0.5);
+}
+
+dialog::backdrop {
+    background: rgba(8, 16, 20, 0.6);
+}
+
+.dlg-head {
+    padding: 22px 24px 0;
+}
+
+.dlg-head h2 {
+    font-size: 1.25rem;
+    font-weight: 650;
+}
+
+.dlg-body {
+    display: grid;
+    gap: 18px;
+    padding: 18px 24px 22px;
+}
+
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+.field label,
+.activities legend {
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.field-narrow {
+    max-width: 200px;
+}
+
+.activities {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.activities legend {
+    padding: 0;
+    margin-bottom: 2px;
+}
+
+.act-head,
+.act-row {
+    display: grid;
+    grid-template-columns: 1fr 96px 40px;
+    gap: 8px;
+    align-items: center;
+}
+
+.act-head {
+    font-size: 0.8125rem;
+    color: var(--ink-soft);
+}
+
+.act-head span:nth-child(2) {
+    padding-left: 2px;
+}
+
+#activityRows {
+    display: grid;
+    gap: 8px;
+}
+
+.act-row input {
+    width: 100%;
+    min-width: 0;
+}
+
+.act-hours {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.activities > .btn {
+    justify-self: start;
+    margin-left: -10px;
+}
+
+#deleteBtn {
+    margin-left: -16px;
+}
+
+.sum {
+    padding: 10px 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    border-radius: 6px;
+}
+
+.sum.warn {
+    color: var(--warn);
+    background: var(--warn-soft);
+}
+
+.sum.ok {
+    color: var(--ok);
+    background: var(--ok-soft);
+}
+
+.dlg-foot {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* ---------- Meddelande ---------- */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 10;
+    max-width: min(92vw, 460px);
+    padding: 12px 16px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--ink);
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* ---------- Smala skärmar ---------- */
+
+@media (max-width: 600px) {
+    .page {
+        padding: 12px 12px 64px;
+    }
+
+    .top {
+        margin-bottom: 24px;
+    }
+
+    .filter {
+        width: 100%;
+    }
+
+    .filter button {
+        flex: 1;
+        padding: 6px 8px;
+    }
+
+    .p {
+        padding: 14px 16px;
+    }
+
+    /* Rad 1: namn och timmar. Rad 2: status och Ändra. */
+    .p-head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+    }
+
+    .p-name {
+        grid-column: 1;
+        margin-right: 0;
+    }
+
+    .p-hours {
+        grid-column: 2;
+        text-align: right;
+    }
+
+    .p-head .status {
+        grid-column: 1;
+        justify-self: start;
+    }
+
+    .p-head .btn {
+        grid-column: 2;
+        justify-self: end;
+    }
+
+    .dlg-head,
+    .dlg-body,
+    .dlg-foot {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .act-head,
+    .act-row {
+        grid-template-columns: 1fr 80px 40px;
+    }
+
+    .dlg-foot {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .toast {
+        transition: none;
+    }
+}
